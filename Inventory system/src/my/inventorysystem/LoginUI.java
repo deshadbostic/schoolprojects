@@ -138,7 +138,8 @@ public class LoginUI extends javax.swing.JFrame {
            jPassword.setText(null);
            systemExit();
            InventorysystemUI info=new InventorysystemUI();
-           info.setVisible(true);
+           info.setVisible(true); 
+           dispose();
        }else
            JOptionPane.showMessageDialog(null,"Invalid Login Details","Login error",JOptionPane.ERROR_MESSAGE);
           jUsername.setText(null);
@@ -148,6 +149,7 @@ public class LoginUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+ 
     private void systemExit(){
         WindowEvent winclosing=new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
     }
@@ -179,10 +181,14 @@ public class LoginUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginUI().setVisible(true);
+                     LoginUI Login=new LoginUI();
+           Login.setVisible(true);
+           
+           
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
