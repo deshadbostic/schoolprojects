@@ -38,7 +38,7 @@ public class RemoveAnItem extends javax.swing.JFrame {
     void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/majorproject","root","");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/major project","root","");
       
             System.out.println("Success");
             
@@ -83,7 +83,7 @@ public class RemoveAnItem extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         deletebtn.setText("Delete");
         deletebtn.addActionListener(new java.awt.event.ActionListener() {

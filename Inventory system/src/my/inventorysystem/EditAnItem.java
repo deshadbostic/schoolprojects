@@ -34,7 +34,7 @@ public class EditAnItem extends javax.swing.JFrame {
  void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/MajorProject","root","");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/major project","root","");
       
             System.out.println("Success");
             
@@ -87,7 +87,7 @@ public class EditAnItem extends javax.swing.JFrame {
         price = new javax.swing.JTextField();
         quantity = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         inventoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

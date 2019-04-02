@@ -34,7 +34,7 @@ public class AddAnItem extends javax.swing.JFrame {
   void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/MajorProject","root","");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/major project","root","");
       
             System.out.println("Success");
             
@@ -72,7 +72,7 @@ public class AddAnItem extends javax.swing.JFrame {
         backbtn = new javax.swing.JButton();
         clearbtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         additembtn.setText("Add Item");
         additembtn.addActionListener(new java.awt.event.ActionListener() {
