@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import net.proteanit.sql.DbUtils;
 public class AddAnItem extends javax.swing.JFrame {
 
     /**
@@ -34,7 +33,7 @@ public class AddAnItem extends javax.swing.JFrame {
   void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/major project","root","");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/majorproject","root","");
       
             System.out.println("Success");
             
