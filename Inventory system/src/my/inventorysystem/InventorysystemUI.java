@@ -1,31 +1,36 @@
 package my.inventorysystem;
 
+import static java.lang.reflect.Array.set;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
+import java.util.Date;
 
 
 public class InventorysystemUI extends javax.swing.JFrame {
 Connection con;
    ResultSet rs;
    PreparedStatement stmt;
+   java.util.Date date;
    
     public InventorysystemUI() {
         initComponents();
            createConnection();
         Update_table();
+        setData();
     }
 void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/majorproject","root","");
-      
             System.out.println("Success");
-            
+           
             
         }  catch(ClassNotFoundException | SQLException ex){
             Logger.getLogger(InventorysystemUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -36,6 +41,22 @@ void createConnection(){
         
     }
     
+    private void setData(){
+         try {
+           String sql = "SELECT MAX(order_ID) FROM Orders_Details";
+           stmt = con.prepareStatement(sql);
+           rs=stmt.executeQuery();
+           while(rs.next()){
+               int order_id = rs.getInt(1) + 1;
+               order_ID.setText(Integer.toString(order_id));
+           }            
+           
+           
+       } catch (Exception e) {
+           System.out.println(e);
+       }
+    }
+
     private void Update_table(){
         
        try {
@@ -59,10 +80,16 @@ void createConnection(){
            rs = stmt.executeQuery();
            inventoryTable2.setModel(DbUtils.resultSetToTableModel(rs));
            
+           sql = "SELECT * FROM Items_Sold";
+           stmt = con.prepareStatement(sql);
+           rs = stmt.executeQuery();
+           ItemSoldTable.setModel(DbUtils.resultSetToTableModel(rs));
+           
+           
             
            
        } catch (Exception e) {
-           JOptionPane.showMessageDialog(null,"Cant Refresh table");
+           JOptionPane.showMessageDialog(null,"Cant Refresh table/tables");
        }      
         
     }
@@ -85,6 +112,8 @@ void createConnection(){
         ExitInv = new javax.swing.JButton();
         RefreshTable = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        ItemSoldTable = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -94,6 +123,10 @@ void createConnection(){
         RemoveCus = new javax.swing.JButton();
         ExitCus = new javax.swing.JButton();
         refreshCus = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        TotalOrder = new javax.swing.JTextField();
+        OrderTotal = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         customersTable2 = new javax.swing.JTable();
@@ -102,17 +135,17 @@ void createConnection(){
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        order_ID = new javax.swing.JTextField();
+        customer_id = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         orderTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        AddItembtn = new javax.swing.JButton();
+        Orderbtn = new javax.swing.JButton();
+        RemoveItembtn = new javax.swing.JButton();
+        ClearAllbtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        GrandTotal = new javax.swing.JTextField();
+        choosedate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -175,12 +208,9 @@ void createConnection(){
                     .addComponent(ExitInv, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(69, 69, 69)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(44, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(RefreshTable)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RefreshTable))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,15 +236,31 @@ void createConnection(){
 
         jTabbedPane2.addTab("Inventory", jPanel3);
 
+        ItemSoldTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(ItemSoldTable);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1017, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Items Sold", jPanel4);
@@ -240,6 +286,11 @@ void createConnection(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        customersTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customersTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(customersTable);
 
         AddCus.setText("Add Customer");
@@ -277,6 +328,16 @@ void createConnection(){
             }
         });
 
+        jLabel4.setText("Total Orders");
+
+        jLabel5.setText("Orders Amount");
+
+        TotalOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TotalOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -284,13 +345,24 @@ void createConnection(){
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(AddCus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(EditCus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RemoveCus, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-                    .addComponent(ExitCus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(AddCus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(EditCus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(RemoveCus, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(ExitCus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(157, 157, 157)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                            .addComponent(TotalOrder))
+                        .addGap(255, 255, 255)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                            .addComponent(OrderTotal))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(37, 37, 37))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(268, 268, 268)
@@ -299,12 +371,6 @@ void createConnection(){
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(refreshCus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(AddCus, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,6 +381,20 @@ void createConnection(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ExitCus)
                 .addGap(26, 26, 26))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(refreshCus)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(OrderTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(TotalOrder))
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Customers", jPanel5);
@@ -327,6 +407,11 @@ void createConnection(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        customersTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customersTable2MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(customersTable2);
 
         inventoryTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -345,30 +430,65 @@ void createConnection(){
 
         jLabel3.setText("Order Date:");
 
+        order_ID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                order_IDActionPerformed(evt);
+            }
+        });
+
+        customer_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customer_idActionPerformed(evt);
+            }
+        });
+
         orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Name", "Price", "Quantity", "Total"
             }
         ));
         jScrollPane5.setViewportView(orderTable);
 
-        jButton1.setText("Add Item");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        AddItembtn.setText("Add Item");
+        AddItembtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                AddItembtnActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Enter Order");
+        Orderbtn.setText("Enter Order");
+        Orderbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OrderbtnActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Remove Item");
+        RemoveItembtn.setText("Remove Item");
+        RemoveItembtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveItembtnActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Clear All");
+        ClearAllbtn.setText("Clear All");
+        ClearAllbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearAllbtnActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Grand Total:");
+
+        GrandTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GrandTotalActionPerformed(evt);
+            }
+        });
+
+        choosedate.setDateFormatString("yyyy-MM-dd");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -384,8 +504,8 @@ void createConnection(){
                                 .addGap(29, 29, 29)
                                 .addComponent(jLabel3))
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))))
+                                .addComponent(order_ID, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(customer_id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel2))
@@ -394,26 +514,26 @@ void createConnection(){
                         .addComponent(jLabel1))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(choosedate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AddItembtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(RemoveItembtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ClearAllbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Orderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(GrandTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,11 +546,11 @@ void createConnection(){
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton4))
+                            .addComponent(AddItembtn)
+                            .addComponent(RemoveItembtn))
                         .addGap(9, 9, 9))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ClearAllbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -438,25 +558,25 @@ void createConnection(){
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Orderbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(GrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(order_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(choosedate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68))))
         );
 
@@ -481,16 +601,22 @@ void createConnection(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    //ADD ITEM BUTTON
     private void newItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemActionPerformed
         AddAnItem obj = new AddAnItem();
         obj.setVisible(true);
     }//GEN-LAST:event_newItemActionPerformed
 
+    
+    //EDIT AN ITEM BUTTON
     private void editItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemActionPerformed
         EditAnItem obj = new EditAnItem();
         obj.setVisible(true);
     }//GEN-LAST:event_editItemActionPerformed
 
+    
+    //REMOVE ITEM BUTTON
     private void removeItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemActionPerformed
         RemoveAnItem obj = new RemoveAnItem();
         obj.setVisible(true);
@@ -500,11 +626,15 @@ void createConnection(){
         System.exit(0);
     }//GEN-LAST:event_ExitInvActionPerformed
 
+    
+    //REFRESH TABLE
     private void RefreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshTableActionPerformed
         Update_table();
         JOptionPane.showMessageDialog(null, "Refresh Complete");
     }//GEN-LAST:event_RefreshTableActionPerformed
 
+    
+    //ADD CUSTOMER
     private void AddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCusActionPerformed
         AddCustomer obj = new AddCustomer();
         obj.setVisible(true);
@@ -514,24 +644,54 @@ void createConnection(){
         System.exit(0);
     }//GEN-LAST:event_ExitCusActionPerformed
 
+    
+    //REFRESH CUSTOMER
     private void refreshCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCusActionPerformed
         Update_table();
         JOptionPane.showMessageDialog(null, "Refresh Complete");
     }//GEN-LAST:event_refreshCusActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TableModel model1 = customersTable2.getModel();
-        int indexs[] = customersTable2.getSelectedRows();
-
-        Object[] row = new Object[4];
-
-        for (int i = 0; i < indexs.length; i++){
-
-            row[0] = model1.getValueAt(indexs[i], 0);
-            row[0] = model1.getValueAt(indexs[i], 0);
-            row[0] = model1.getValueAt(indexs[i], 0);
+    private void AddItembtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItembtnActionPerformed
+        DefaultTableModel modelinventory = (DefaultTableModel) inventoryTable.getModel();
+        int [ ] indexes = inventoryTable2.getSelectedRows();
+        Object [ ] row = new Object [5];
+        DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
+        
+        
+        String howmany = JOptionPane.showInputDialog(null, "How many would you like?");
+        
+        //Asks how many items user wishes to buy
+        int Howmany = Integer.parseInt(howmany);
+        int Rows = inventoryTable2.getSelectedRow();
+        //To compare if Howmany is more than inventory available
+        int IsQuantityOver = (int) inventoryTable2.getValueAt(Rows,3);
+        
+        if(IsQuantityOver >= Howmany){
+        double price = Double.parseDouble(modelinventory.getValueAt(Rows,2).toString());
+        double total = price * Howmany;
+        
+        for (int i = 0; i < indexes.length; i++){        
+            row [0] = modelinventory.getValueAt(indexes [i], 0);
+            row [1] = modelinventory.getValueAt(indexes [i], 1);
+            row [2] = modelinventory.getValueAt(indexes [i], 2);
+            row [3] = howmany;
+            row [4] = total;
+            modelorder.addRow(row);     
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        //To calculate the grandtotal
+        double grandtotal = 0.0;
+        int  Rowscount = orderTable.getRowCount();
+        double amt;
+        for (int z = 0; z < Rowscount; z++){
+            amt = Double.parseDouble(orderTable.getValueAt(z, 4).toString());
+            grandtotal += amt;
+           }
+        GrandTotal.setText(Double.toString(grandtotal));      
+        }else{
+            JOptionPane.showMessageDialog(null, "Cannot Order more than is available, Try again","Notice",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_AddItembtnActionPerformed
 
     private void EditCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditCusActionPerformed
         editCustomer obj = new editCustomer();
@@ -542,6 +702,136 @@ void createConnection(){
         deleteCustomer obj = new deleteCustomer();
         obj.setVisible(true);
     }//GEN-LAST:event_RemoveCusActionPerformed
+
+    private void RemoveItembtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveItembtnActionPerformed
+        DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
+        int Row = orderTable.getSelectedRow();
+        modelorder.removeRow(Row);
+        
+    }//GEN-LAST:event_RemoveItembtnActionPerformed
+
+    private void GrandTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrandTotalActionPerformed
+        
+    }//GEN-LAST:event_GrandTotalActionPerformed
+
+    private void customersTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTable2MouseClicked
+        DefaultTableModel modelCustomer = (DefaultTableModel) customersTable2.getModel();
+        int row = customersTable2.getSelectedRow();
+        customer_id.setText(modelCustomer.getValueAt(row, 0).toString());
+    }//GEN-LAST:event_customersTable2MouseClicked
+
+    private void customer_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customer_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customer_idActionPerformed
+
+    private void order_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_order_IDActionPerformed
+        
+    }//GEN-LAST:event_order_IDActionPerformed
+
+    private void OrderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderbtnActionPerformed
+        DefaultTableModel modelcustomer = (DefaultTableModel) customersTable2.getModel();
+        int CusRow = customersTable2.getSelectedRow();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+           java.util.Date date=new java.util.Date();
+           Date orderDate = choosedate.getDate();
+           String s = sdf.format(orderDate);
+           System.out.println(s);
+        try {
+            //insert into order_details Table
+           
+           java.sql.Date sqlDate=new java.sql.Date(date.getTime());          
+            int Customer_id = (int) customersTable2.getValueAt(CusRow,0);
+            double Grand_Total = Double.parseDouble(GrandTotal.getText());
+            
+            PreparedStatement stmt;
+            stmt = con.prepareStatement("INSERT INTO Orders_Details VALUES(NULL,?,?,?)");
+            stmt.setString(1,s);
+            stmt.setInt(2, Customer_id);
+            stmt.setDouble(3, Grand_Total);
+            stmt.execute();
+            stmt.close();
+            JOptionPane.showMessageDialog(null,"Successfully Ordered!","Notice",JOptionPane.INFORMATION_MESSAGE);
+            
+            
+            
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"You have entered an invalid value","Error",JOptionPane.ERROR_MESSAGE);
+            System.out.println(e);
+        }
+        
+        //Remove item count from stock
+        try{
+            DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+            int z = 0;
+            
+            do{
+                String Name = (String) (orderTable.getValueAt(z,1));
+                System.out.println(Name);
+                int id = (int) (orderTable.getValueAt(z, 0));
+                String Quant = (String) (orderTable.getValueAt(z, 3));
+                int Quantity = Integer.parseInt(Quant);
+                System.out.println(Quantity);
+                z++;
+                PreparedStatement stmt;
+                stmt = con.prepareStatement("UPDATE `inventory` SET `Quantity`= Quantity - "+Quantity+" WHERE id in ("+id+")");
+                stmt.executeUpdate();
+                stmt = con.prepareStatement("INSERT INTO Items_Sold (item_Name,Quantity_Sold,order_Date) VALUES (?,?,?)");
+                stmt.setString(1,Name);
+                stmt.setInt(2,Quantity);
+                stmt.setString(3,s);
+                stmt.execute();
+            }while(z < 9);
+           
+            
+            
+        }
+        catch(Exception e){
+        System.out.println(e);
+        }
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_OrderbtnActionPerformed
+
+    private void ClearAllbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearAllbtnActionPerformed
+        DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
+        modelorder.setRowCount(0);
+    }//GEN-LAST:event_ClearAllbtnActionPerformed
+
+    private void customersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTableMouseClicked
+        int rows = customersTable.getSelectedRow();
+        int custID = (int) customersTable.getValueAt(rows,0);
+    try {
+           String sql = "SELECT COUNT(order_ID) FROM Orders_Details WHERE Customer_id = "+custID+"";
+           stmt = con.prepareStatement(sql);
+           rs = stmt.executeQuery();
+           while(rs.next()){
+               int TotalOrders = rs.getInt(1);
+               TotalOrder.setText(Integer.toString(TotalOrders));
+           }
+           
+           sql = "SELECT SUM(grand_Total) FROM Orders_Details WHERE Customer_id = "+custID+"";
+           stmt = con.prepareStatement(sql);
+           rs = stmt.executeQuery();
+           while(rs.next()){
+               double OrdersTotal = rs.getInt(1);
+               OrderTotal.setText(Double.toString(OrdersTotal));
+           }
+        
+    } catch (Exception e) {
+       System.out.println(e);
+    }
+        
+        
+        
+    }//GEN-LAST:event_customersTableMouseClicked
+
+    private void TotalOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalOrderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TotalOrderActionPerformed
     
     /**
      * @param args the command line arguments
@@ -582,24 +872,31 @@ void createConnection(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddCus;
+    private javax.swing.JButton AddItembtn;
+    private javax.swing.JButton ClearAllbtn;
     private javax.swing.JButton EditCus;
     private javax.swing.JButton ExitCus;
     private javax.swing.JButton ExitInv;
+    private javax.swing.JTextField GrandTotal;
+    private javax.swing.JTable ItemSoldTable;
+    private javax.swing.JTextField OrderTotal;
+    private javax.swing.JButton Orderbtn;
     private javax.swing.JButton RefreshTable;
     private javax.swing.JButton RemoveCus;
+    private javax.swing.JButton RemoveItembtn;
+    private javax.swing.JTextField TotalOrder;
+    private com.toedter.calendar.JDateChooser choosedate;
+    private javax.swing.JTextField customer_id;
     private javax.swing.JTable customersTable;
     private javax.swing.JTable customersTable2;
     private javax.swing.JButton editItem;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JTable inventoryTable2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -611,12 +908,11 @@ void createConnection(){
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JButton newItem;
     private javax.swing.JTable orderTable;
+    private javax.swing.JTextField order_ID;
     private javax.swing.JButton refreshCus;
     private javax.swing.JButton removeItem;
     // End of variables declaration//GEN-END:variables

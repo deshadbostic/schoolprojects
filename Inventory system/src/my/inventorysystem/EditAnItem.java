@@ -147,6 +147,12 @@ public class EditAnItem extends javax.swing.JFrame {
 
         jLabel5.setText("ID:");
 
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -247,7 +253,7 @@ public class EditAnItem extends javax.swing.JFrame {
            stmt.close();
            JOptionPane.showMessageDialog(null, "Updated Successfully");
            refreshbtn.doClick();
-           id.setEnabled(false);
+           
            
        } catch (SQLException ex) {
            Logger.getLogger(EditAnItem.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,6 +262,7 @@ public class EditAnItem extends javax.swing.JFrame {
     }//GEN-LAST:event_updatebtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
+        id.setEnabled(false);
         DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
         int row = inventoryTable.getSelectedRow();
         
@@ -280,6 +287,10 @@ public class EditAnItem extends javax.swing.JFrame {
     private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
         dispose();
     }//GEN-LAST:event_backbtnActionPerformed
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
 
     /**
      * @param args the command line arguments
