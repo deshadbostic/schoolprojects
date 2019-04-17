@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2019 at 06:02 PM
+-- Generation Time: Apr 17, 2019 at 02:09 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -43,7 +43,8 @@ CREATE TABLE `Customers` (
 
 INSERT INTO `Customers` (`id`, `FirstName`, `Lastname`, `Address`, `Telephone`, `Email`) VALUES
 (1, 'Usab', 'uabs', 'ocna', '098-7654', 'ajgsc,as.com'),
-(2, 'Usab', 'hey there', 'asdqw', '098-7654', 'ajgsc,as.com');
+(2, 'Usab', 'hey there', 'asdqw', '098-7654', 'ajgsc,as.com'),
+(3, 'Kyle', 'Batmans', '12', '421', '124');
 
 -- --------------------------------------------------------
 
@@ -64,8 +65,72 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `Name`, `Price`, `Quantity`, `Description`) VALUES
-(1, 'Kyle is a plant', 1000000, 1, 'The One and Only'),
-(2, 'The Plant', 13, 6, 'A plant');
+(1, 'Kyle is a plant', 1000000, 0, 'The One and Only'),
+(2, 'Pumpkin', 13, 4, 'Pumpkin'),
+(3, 'Palm', 23, 0, 'KYle'),
+(4, 'Watermelon', 14, 0, 'kyea');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Items_Sold`
+--
+
+CREATE TABLE `Items_Sold` (
+  `item_Name` varchar(50) NOT NULL,
+  `Quantity_Sold` int(11) NOT NULL,
+  `order_Date` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Items_Sold`
+--
+
+INSERT INTO `Items_Sold` (`item_Name`, `Quantity_Sold`, `order_Date`) VALUES
+('Watermelon', 5, '0000-00-00'),
+('Pumpkin', 3, '2019'),
+('watermelon', 1, '1'),
+('watermelon', 1, '1'),
+('Pumpkin', 1, '2019-04-08'),
+('Pumpkin', 1, '2019-04-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Orders_Details`
+--
+
+CREATE TABLE `Orders_Details` (
+  `order_ID` int(11) NOT NULL,
+  `order_Date` varchar(50) NOT NULL,
+  `Customer_id` int(11) NOT NULL,
+  `grand_Total` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Orders_Details`
+--
+
+INSERT INTO `Orders_Details` (`order_ID`, `order_Date`, `Customer_id`, `grand_Total`) VALUES
+(5, 'eW', 3, 34.4),
+(6, '4/14/19 9:50 PM', 3, 14),
+(7, '4/14/19 9:50 PM', 3, 60),
+(8, '4/14/19 9:51 PM', 2, 60),
+(9, '4/14/19 9:51 PM', 1, 60),
+(10, '4/1/19 10:08 PM', 3, 14),
+(11, '2019-04-01', 1, 28),
+(12, '2019-04-01', 3, 14),
+(13, '2019-04-01', 3, 52),
+(14, '2019-04-01', 3, 260),
+(15, '2019-04-01', 3, 153),
+(16, '2019-04-30', 3, 14),
+(17, '2019-04-01', 3, 13),
+(18, '2019-04-01', 3, 13),
+(19, '2019-04-01', 3, 13),
+(20, '2019-04-08', 2, 13),
+(21, '2019-04-08', 2, 1000013),
+(22, '2019-04-08', 3, 13),
+(23, '2019-04-01', 3, 13);
 
 --
 -- Indexes for dumped tables
@@ -84,6 +149,12 @@ ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `Orders_Details`
+--
+ALTER TABLE `Orders_Details`
+  ADD PRIMARY KEY (`order_ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -91,13 +162,19 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `Customers`
 --
 ALTER TABLE `Customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `Orders_Details`
+--
+ALTER TABLE `Orders_Details`
+  MODIFY `order_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
