@@ -13,15 +13,13 @@ import net.proteanit.sql.DbUtils;
 import java.util.Date;
 
 
-public class InventorysystemUI extends javax.swing.JFrame {
+public class InventorysystemUINormalUser extends javax.swing.JFrame {
 Connection con;
    ResultSet rs;
    PreparedStatement stmt;
    java.util.Date date;
-   String UserName;
-   String Password;
    
-    public InventorysystemUI() {
+    public InventorysystemUINormalUser() {
         initComponents();
            createConnection();
         Update_table();
@@ -35,7 +33,7 @@ void createConnection(){
            
             
         }  catch(ClassNotFoundException | SQLException ex){
-            Logger.getLogger(InventorysystemUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InventorysystemUINormalUser.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error can't connect to sql");
             
         }
@@ -87,13 +85,11 @@ void createConnection(){
            rs = stmt.executeQuery();
            ItemSoldTable.setModel(DbUtils.resultSetToTableModel(rs));
            
-           sql = "SELECT * FROM users";
-           stmt = con.prepareStatement(sql);
-           rs = stmt.executeQuery();
-           UsersTable.setModel(DbUtils.resultSetToTableModel(rs));
+           
+            
            
        } catch (Exception e) {
-           JOptionPane.showMessageDialog(null,"Unable to refresh one or more tables!");
+           JOptionPane.showMessageDialog(null,"Cant Refresh table/tables");
        }      
         
     }
@@ -118,13 +114,6 @@ void createConnection(){
         jPanel4 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         ItemSoldTable = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        UsersTable = new javax.swing.JTable();
-        AddUser = new javax.swing.JButton();
-        PromoteUser = new javax.swing.JButton();
-        RemoveUser = new javax.swing.JButton();
-        DemoteUser = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         customersTable = new javax.swing.JTable();
@@ -274,82 +263,6 @@ void createConnection(){
         );
 
         jTabbedPane2.addTab("Items Sold", jPanel4);
-
-        UsersTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane7.setViewportView(UsersTable);
-
-        AddUser.setText("Add User");
-        AddUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddUserActionPerformed(evt);
-            }
-        });
-
-        PromoteUser.setText("Promote User");
-        PromoteUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PromoteUserActionPerformed(evt);
-            }
-        });
-
-        RemoveUser.setText("Remove User");
-        RemoveUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RemoveUserActionPerformed(evt);
-            }
-        });
-
-        DemoteUser.setText("Demote User");
-        DemoteUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DemoteUserActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(RemoveUser)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(PromoteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(DemoteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(AddUser)
-                        .addGap(66, 66, 66)
-                        .addComponent(PromoteUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(DemoteUser)
-                        .addGap(59, 59, 59)))
-                .addComponent(RemoveUser)
-                .addContainerGap(102, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("ManageUsers if admim", jPanel6);
 
         customersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -674,148 +587,37 @@ void createConnection(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    //ADD ITEM BUTTON
-    private void newItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemActionPerformed
-        AddAnItem obj = new AddAnItem();
-        obj.setVisible(true);
-    }//GEN-LAST:event_newItemActionPerformed
+    private void GrandTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrandTotalActionPerformed
 
-    
-    //EDIT AN ITEM BUTTON
-    private void editItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemActionPerformed
-        EditAnItem obj = new EditAnItem();
-        obj.setVisible(true);
-    }//GEN-LAST:event_editItemActionPerformed
+    }//GEN-LAST:event_GrandTotalActionPerformed
 
-    
-    //REMOVE ITEM BUTTON
-    private void removeItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemActionPerformed
-        RemoveAnItem obj = new RemoveAnItem();
-        obj.setVisible(true);
-    }//GEN-LAST:event_removeItemActionPerformed
-
-    private void ExitInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitInvActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_ExitInvActionPerformed
-
-    
-    //REFRESH TABLE
-    private void RefreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshTableActionPerformed
-        Update_table();
-        JOptionPane.showMessageDialog(null, "Refresh Complete");
-    }//GEN-LAST:event_RefreshTableActionPerformed
-
-    
-    //ADD CUSTOMER
-    private void AddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCusActionPerformed
-        AddCustomer obj = new AddCustomer();
-        obj.setVisible(true);
-    }//GEN-LAST:event_AddCusActionPerformed
-
-    private void ExitCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitCusActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_ExitCusActionPerformed
-
-    
-    //REFRESH CUSTOMER
-    private void refreshCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCusActionPerformed
-        Update_table();
-        JOptionPane.showMessageDialog(null, "Refresh Complete");
-    }//GEN-LAST:event_refreshCusActionPerformed
-
-    private void AddItembtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItembtnActionPerformed
-        DefaultTableModel modelinventory = (DefaultTableModel) inventoryTable.getModel();
-        int [ ] indexes = inventoryTable2.getSelectedRows();
-        Object [ ] row = new Object [5];
+    private void ClearAllbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearAllbtnActionPerformed
         DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
-        
-        
-        String howmany = JOptionPane.showInputDialog(null, "How many would you like?");
-        
-        //Asks how many items user wishes to buy
-        int Howmany = Integer.parseInt(howmany);
-        int Rows = inventoryTable2.getSelectedRow();
-        //To compare if Howmany is more than inventory available
-        int IsQuantityOver = (int) inventoryTable2.getValueAt(Rows,3);
-        
-        if(IsQuantityOver >= Howmany){
-        double price = Double.parseDouble(modelinventory.getValueAt(Rows,2).toString());
-        double total = price * Howmany;
-        
-        for (int i = 0; i < indexes.length; i++){        
-            row [0] = modelinventory.getValueAt(indexes [i], 0);
-            row [1] = modelinventory.getValueAt(indexes [i], 1);
-            row [2] = modelinventory.getValueAt(indexes [i], 2);
-            row [3] = howmany;
-            row [4] = total;
-            modelorder.addRow(row);     
-        }
-        
-        //To calculate the grandtotal
-        double grandtotal = 0.0;
-        int  Rowscount = orderTable.getRowCount();
-        double amt;
-        for (int z = 0; z < Rowscount; z++){
-            amt = Double.parseDouble(orderTable.getValueAt(z, 4).toString());
-            grandtotal += amt;
-           }
-        GrandTotal.setText(Double.toString(grandtotal));      
-        }else{
-            JOptionPane.showMessageDialog(null, "Cannot Order more than is available, Try again","Notice",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_AddItembtnActionPerformed
-
-    private void EditCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditCusActionPerformed
-        editCustomer obj = new editCustomer();
-        obj.setVisible(true);
-    }//GEN-LAST:event_EditCusActionPerformed
-
-    private void RemoveCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveCusActionPerformed
-        deleteCustomer obj = new deleteCustomer();
-        obj.setVisible(true);
-    }//GEN-LAST:event_RemoveCusActionPerformed
+        modelorder.setRowCount(0);
+    }//GEN-LAST:event_ClearAllbtnActionPerformed
 
     private void RemoveItembtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveItembtnActionPerformed
         DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
         int Row = orderTable.getSelectedRow();
         modelorder.removeRow(Row);
-        
+
     }//GEN-LAST:event_RemoveItembtnActionPerformed
-
-    private void GrandTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrandTotalActionPerformed
-        
-    }//GEN-LAST:event_GrandTotalActionPerformed
-
-    private void customersTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTable2MouseClicked
-        DefaultTableModel modelCustomer = (DefaultTableModel) customersTable2.getModel();
-        int row = customersTable2.getSelectedRow();
-        customer_id.setText(modelCustomer.getValueAt(row, 0).toString());
-    }//GEN-LAST:event_customersTable2MouseClicked
-
-    private void customer_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customer_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customer_idActionPerformed
-
-    private void order_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_order_IDActionPerformed
-        
-    }//GEN-LAST:event_order_IDActionPerformed
 
     private void OrderbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderbtnActionPerformed
         DefaultTableModel modelcustomer = (DefaultTableModel) customersTable2.getModel();
         int CusRow = customersTable2.getSelectedRow();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-           java.util.Date date=new java.util.Date();
-           Date orderDate = choosedate.getDate();
-           String s = sdf.format(orderDate);
-           System.out.println(s);
+        java.util.Date date=new java.util.Date();
+        Date orderDate = choosedate.getDate();
+        String s = sdf.format(orderDate);
+        System.out.println(s);
         try {
             //insert into order_details Table
-           
-           java.sql.Date sqlDate=new java.sql.Date(date.getTime());          
+
+            java.sql.Date sqlDate=new java.sql.Date(date.getTime());
             int Customer_id = (int) customersTable2.getValueAt(CusRow,0);
             double Grand_Total = Double.parseDouble(GrandTotal.getText());
-            
+
             PreparedStatement stmt;
             stmt = con.prepareStatement("INSERT INTO Orders_Details VALUES(NULL,?,?,?)");
             stmt.setString(1,s);
@@ -824,20 +626,17 @@ void createConnection(){
             stmt.execute();
             stmt.close();
             JOptionPane.showMessageDialog(null,"Successfully Ordered!","Notice",JOptionPane.INFORMATION_MESSAGE);
-            
-            
-            
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"You have entered an invalid value","Error",JOptionPane.ERROR_MESSAGE);
             System.out.println(e);
         }
-        
+
         //Remove item count from stock
         try{
             DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
             int z = 0;
-            
+
             do{
                 String Name = (String) (orderTable.getValueAt(z,1));
                 System.out.println(Name);
@@ -856,152 +655,162 @@ void createConnection(){
                 stmt.execute();
                 stmt.close();
             }while(z < 9);
-           
-            
-            
+
         }
         catch(Exception e){
-        System.out.println(e);
+            System.out.println(e);
         }
-        
-        
-        
-        
-        
+
     }//GEN-LAST:event_OrderbtnActionPerformed
 
-    private void ClearAllbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearAllbtnActionPerformed
+    private void AddItembtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItembtnActionPerformed
+        DefaultTableModel modelinventory = (DefaultTableModel) inventoryTable.getModel();
+        int [ ] indexes = inventoryTable2.getSelectedRows();
+        Object [ ] row = new Object [5];
         DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
-        modelorder.setRowCount(0);
-    }//GEN-LAST:event_ClearAllbtnActionPerformed
 
-    private void customersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTableMouseClicked
-        int rows = customersTable.getSelectedRow();
-        int custID = (int) customersTable.getValueAt(rows,0);
-    try {
-           String sql = "SELECT COUNT(order_ID) FROM Orders_Details WHERE Customer_id = "+custID+"";
-           stmt = con.prepareStatement(sql);
-           rs = stmt.executeQuery();
-           while(rs.next()){
-               int TotalOrders = rs.getInt(1);
-               TotalOrder.setText(Integer.toString(TotalOrders));
-           }
-           
-           sql = "SELECT SUM(grand_Total) FROM Orders_Details WHERE Customer_id = "+custID+"";
-           stmt = con.prepareStatement(sql);
-           rs = stmt.executeQuery();
-           while(rs.next()){
-               double OrdersTotal = rs.getInt(1);
-               OrderTotal.setText(Double.toString(OrdersTotal));
-           }
-        
-    } catch (Exception e) {
-       System.out.println(e);
-    }
-        
-        
-        
-    }//GEN-LAST:event_customersTableMouseClicked
+        String howmany = JOptionPane.showInputDialog(null, "How many would you like?");
+
+        //Asks how many items user wishes to buy
+        int Howmany = Integer.parseInt(howmany);
+        int Rows = inventoryTable2.getSelectedRow();
+        //To compare if Howmany is more than inventory available
+        int IsQuantityOver = (int) inventoryTable2.getValueAt(Rows,3);
+
+        if(IsQuantityOver >= Howmany){
+            double price = Double.parseDouble(modelinventory.getValueAt(Rows,2).toString());
+            double total = price * Howmany;
+
+            for (int i = 0; i < indexes.length; i++){
+                row [0] = modelinventory.getValueAt(indexes [i], 0);
+                row [1] = modelinventory.getValueAt(indexes [i], 1);
+                row [2] = modelinventory.getValueAt(indexes [i], 2);
+                row [3] = howmany;
+                row [4] = total;
+                modelorder.addRow(row);
+            }
+
+            //To calculate the grandtotal
+            double grandtotal = 0.0;
+            int  Rowscount = orderTable.getRowCount();
+            double amt;
+            for (int z = 0; z < Rowscount; z++){
+                amt = Double.parseDouble(orderTable.getValueAt(z, 4).toString());
+                grandtotal += amt;
+            }
+            GrandTotal.setText(Double.toString(grandtotal));
+        }else{
+            JOptionPane.showMessageDialog(null, "Cannot Order more than is available, Try again","Notice",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_AddItembtnActionPerformed
+
+    private void customer_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customer_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customer_idActionPerformed
+
+    private void order_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_order_IDActionPerformed
+
+    }//GEN-LAST:event_order_IDActionPerformed
+
+    private void customersTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTable2MouseClicked
+        DefaultTableModel modelCustomer = (DefaultTableModel) customersTable2.getModel();
+        int row = customersTable2.getSelectedRow();
+        customer_id.setText(modelCustomer.getValueAt(row, 0).toString());
+    }//GEN-LAST:event_customersTable2MouseClicked
 
     private void TotalOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalOrderActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TotalOrderActionPerformed
 
-    
-    //Add User Button
-    private void AddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddUserActionPerformed
-            
-           
-         try{
-            UserName = JOptionPane.showInputDialog(null,"Enter the Username");
-            if (UserName != null){    
-                  Password = JOptionPane.showInputDialog(null,"Enter Password",JOptionPane.OK_CANCEL_OPTION);
-            if(Password != null){
-                        int sure = JOptionPane.showConfirmDialog(null, "Are you sure you wish to add the user?");
-                        if (sure == 0){
-                            PreparedStatement stmt;
-                            stmt = con.prepareStatement("INSERT INTO users (`Username`,`Password`) VALUES(?,?)");
-                            stmt.setString(1, UserName);
-                            stmt.setString(2, Password);
-                            stmt.execute();
-                            System.out.println("Completed");
-                            stmt.close();
-                            JOptionPane.showMessageDialog(null,"User Added Successfully","Notice",JOptionPane.INFORMATION_MESSAGE);
-                            Update_table();
-                        }
+    //REFRESH CUSTOMER
+    private void refreshCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshCusActionPerformed
+        Update_table();
+        JOptionPane.showMessageDialog(null, "Refresh Complete");
+    }//GEN-LAST:event_refreshCusActionPerformed
+
+    private void ExitCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitCusActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_ExitCusActionPerformed
+
+    private void RemoveCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveCusActionPerformed
+        deleteCustomer obj = new deleteCustomer();
+        obj.setVisible(true);
+    }//GEN-LAST:event_RemoveCusActionPerformed
+
+    private void EditCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditCusActionPerformed
+        editCustomer obj = new editCustomer();
+        obj.setVisible(true);
+    }//GEN-LAST:event_EditCusActionPerformed
+
+    //ADD CUSTOMER
+    private void AddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCusActionPerformed
+        AddCustomer obj = new AddCustomer();
+        obj.setVisible(true);
+    }//GEN-LAST:event_AddCusActionPerformed
+
+    private void customersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTableMouseClicked
+        int rows = customersTable.getSelectedRow();
+        int custID = (int) customersTable.getValueAt(rows,0);
+        try {
+            String sql = "SELECT COUNT(order_ID) FROM Orders_Details WHERE Customer_id = "+custID+"";
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int TotalOrders = rs.getInt(1);
+                TotalOrder.setText(Integer.toString(TotalOrders));
             }
+
+            sql = "SELECT SUM(grand_Total) FROM Orders_Details WHERE Customer_id = "+custID+"";
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                double OrdersTotal = rs.getInt(1);
+                OrderTotal.setText(Double.toString(OrdersTotal));
             }
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"You have entered an invalid value","Error",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_AddUserActionPerformed
-
-    
-    //Promote user button
-    private void PromoteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PromoteUserActionPerformed
-        try{
-            DefaultTableModel model = (DefaultTableModel)UsersTable.getModel();
-            int Row = UsersTable.getSelectedRow();
-            String Role = "Admin";
-            String ID = (model.getValueAt(Row, 0).toString());
-            PreparedStatement stmt;
-            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE id = ? ");
-            stmt.setString(1, Role);
-            stmt.setString(2, ID);
-            stmt.execute();
-            System.out.println("Completed");
-            stmt.close();
-            Update_table();
-            
-        }catch(Exception e){
             System.out.println(e);
         }
-    }//GEN-LAST:event_PromoteUserActionPerformed
+
+    }//GEN-LAST:event_customersTableMouseClicked
+
+    //REFRESH TABLE
+    private void RefreshTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshTableActionPerformed
+        Update_table();
+        JOptionPane.showMessageDialog(null, "Refresh Complete");
+    }//GEN-LAST:event_RefreshTableActionPerformed
+
+    private void ExitInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitInvActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_ExitInvActionPerformed
+
+    //REMOVE ITEM BUTTON
+    private void removeItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemActionPerformed
+        RemoveAnItem obj = new RemoveAnItem();
+        obj.setVisible(true);
+    }//GEN-LAST:event_removeItemActionPerformed
+
+    //EDIT AN ITEM BUTTON
+    private void editItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editItemActionPerformed
+        EditAnItem obj = new EditAnItem();
+        obj.setVisible(true);
+    }//GEN-LAST:event_editItemActionPerformed
+
+    //ADD ITEM BUTTON
+    private void newItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemActionPerformed
+        AddAnItem obj = new AddAnItem();
+        obj.setVisible(true);
+    }//GEN-LAST:event_newItemActionPerformed
 
     
-    //Demote User button
-    private void DemoteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DemoteUserActionPerformed
-        try{
-            DefaultTableModel model = (DefaultTableModel)UsersTable.getModel();
-            int Row = UsersTable.getSelectedRow();
-            String Role = "User";
-            String ID = (model.getValueAt(Row, 0).toString());
-            PreparedStatement stmt;
-            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE id = ? ");
-            stmt.setString(1, Role);
-            stmt.setString(2, ID);
-            stmt.execute();
-            System.out.println("Completed");
-            stmt.close();
-            Update_table();
-            
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_DemoteUserActionPerformed
-
     
-    //Remove User button
-    private void RemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveUserActionPerformed
-         try{
-            DefaultTableModel model = (DefaultTableModel)UsersTable.getModel();
-            int Row = UsersTable.getSelectedRow();
-            String ID = (model.getValueAt(Row, 0).toString());
-            PreparedStatement stmt;
-            stmt = con.prepareStatement("DELETE FROM users WHERE id = ?");
-            stmt.setString(1, ID);
-            stmt.execute();
-            System.out.println("Completed");
-            stmt.close();
-            Update_table();
-            
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_RemoveUserActionPerformed
     
-   
+    
+    
+        
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1016,20 +825,21 @@ void createConnection(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InventorysystemUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InventorysystemUINormalUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InventorysystemUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InventorysystemUINormalUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InventorysystemUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InventorysystemUINormalUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InventorysystemUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InventorysystemUINormalUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 InventorysystemUI Inventory=new InventorysystemUI();
+                 InventorysystemUINormalUser Inventory=new InventorysystemUINormalUser();
            Inventory.setVisible(true);
                
             }
@@ -1039,9 +849,7 @@ void createConnection(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddCus;
     private javax.swing.JButton AddItembtn;
-    private javax.swing.JButton AddUser;
     private javax.swing.JButton ClearAllbtn;
-    private javax.swing.JButton DemoteUser;
     private javax.swing.JButton EditCus;
     private javax.swing.JButton ExitCus;
     private javax.swing.JButton ExitInv;
@@ -1049,13 +857,10 @@ void createConnection(){
     private javax.swing.JTable ItemSoldTable;
     private javax.swing.JTextField OrderTotal;
     private javax.swing.JButton Orderbtn;
-    private javax.swing.JButton PromoteUser;
     private javax.swing.JButton RefreshTable;
     private javax.swing.JButton RemoveCus;
     private javax.swing.JButton RemoveItembtn;
-    private javax.swing.JButton RemoveUser;
     private javax.swing.JTextField TotalOrder;
-    private javax.swing.JTable UsersTable;
     private com.toedter.calendar.JDateChooser choosedate;
     private javax.swing.JTextField customer_id;
     private javax.swing.JTable customersTable;
@@ -1072,7 +877,6 @@ void createConnection(){
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1080,7 +884,6 @@ void createConnection(){
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JButton newItem;
     private javax.swing.JTable orderTable;

@@ -239,7 +239,7 @@ public class editCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_BackbtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         DefaultTableModel model = (DefaultTableModel)CustomersTable.getModel();
+        DefaultTableModel model = (DefaultTableModel)CustomersTable.getModel();
         int row = CustomersTable.getSelectedRow();
        
         String ID = (model.getValueAt(row, 0).toString());

@@ -159,10 +159,10 @@ public class deleteCustomer extends javax.swing.JFrame {
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
         int row = inventoryTable.getSelectedRow();
-        String name = inventoryTable.getValueAt(row, 0).toString();
+        String name = inventoryTable.getValueAt(row, 1).toString();
         System.out.print(name);
 
-        String sqlc = "DELETE FROM Customers WHERE Firstname = ?";
+        String sqlc = "DELETE FROM Customers WHERE FirstName = ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sqlc);
             stmt.setString(1, name);
