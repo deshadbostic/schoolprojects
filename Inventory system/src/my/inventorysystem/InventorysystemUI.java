@@ -11,6 +11,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 import java.util.Date;
+import java.util.Timer;
+
+
 
 
 public class InventorysystemUI extends javax.swing.JFrame {
@@ -20,6 +23,7 @@ Connection con;
    java.util.Date date;
    String UserName;
    String Password;
+  
    
     public InventorysystemUI() {
         initComponents();
@@ -45,7 +49,7 @@ void createConnection(){
     
     private void setData(){
          try {
-           String sql = "SELECT MAX(order_ID) FROM Orders_Details";
+           String sql = "SELECT MAX(orderid) FROM Orderdetails";
            stmt = con.prepareStatement(sql);
            rs=stmt.executeQuery();
            while(rs.next()){
@@ -82,7 +86,7 @@ void createConnection(){
            rs = stmt.executeQuery();
            inventoryTable2.setModel(DbUtils.resultSetToTableModel(rs));
            
-           sql = "SELECT * FROM Items_Sold";
+           sql = "SELECT Itemname,Quantitysold,Orderdate FROM orderdetails";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            ItemSoldTable.setModel(DbUtils.resultSetToTableModel(rs));
@@ -214,7 +218,7 @@ void createConnection(){
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(newItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(editItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(removeItem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, Short.MAX_VALUE))
+                        .addComponent(removeItem, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                     .addComponent(ExitInv, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(69, 69, 69)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,7 +524,7 @@ void createConnection(){
 
             },
             new String [] {
-                "ID", "Name", "Price", "Quantity", "Total"
+                "Title 1", "TItle 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         jScrollPane5.setViewportView(orderTable);
@@ -572,13 +576,13 @@ void createConnection(){
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addComponent(jLabel3))
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(order_ID, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(customer_id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))))
+                                .addComponent(customer_id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel2))
@@ -588,25 +592,28 @@ void createConnection(){
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(choosedate, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(AddItembtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(RemoveItembtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(ClearAllbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
-                            .addComponent(Orderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(GrandTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(GrandTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(AddItembtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                .addComponent(RemoveItembtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)
+                                .addComponent(ClearAllbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(51, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(Orderbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -617,27 +624,26 @@ void createConnection(){
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(AddItembtn)
-                            .addComponent(RemoveItembtn))
-                        .addGap(9, 9, 9))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(AddItembtn)
+                        .addComponent(RemoveItembtn))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(ClearAllbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                        .addGap(14, 14, 14)))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(Orderbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(GrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addContainerGap(52, Short.MAX_VALUE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Orderbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -709,7 +715,7 @@ void createConnection(){
     
     //ADD CUSTOMER
     private void AddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCusActionPerformed
-        AddCustomer obj = new AddCustomer();
+        addCustomer obj = new addCustomer();
         obj.setVisible(true);
     }//GEN-LAST:event_AddCusActionPerformed
 
@@ -735,9 +741,10 @@ void createConnection(){
         
         //Asks how many items user wishes to buy
         int Howmany = Integer.parseInt(howmany);
+        
         int Rows = inventoryTable2.getSelectedRow();
         //To compare if Howmany is more than inventory available
-        int IsQuantityOver = (int) inventoryTable2.getValueAt(Rows,3);
+        int IsQuantityOver = (int) inventoryTable2.getValueAt(Rows,2);
         
         if(IsQuantityOver >= Howmany){
         double price = Double.parseDouble(modelinventory.getValueAt(Rows,2).toString());
@@ -810,14 +817,13 @@ void createConnection(){
            String s = sdf.format(orderDate);
            System.out.println(s);
         try {
-            //insert into order_details Table
-           
+            //insert into orderdetails Table
            java.sql.Date sqlDate=new java.sql.Date(date.getTime());          
             int Customer_id = (int) customersTable2.getValueAt(CusRow,0);
             double Grand_Total = Double.parseDouble(GrandTotal.getText());
             
             PreparedStatement stmt;
-            stmt = con.prepareStatement("INSERT INTO Orders_Details VALUES(NULL,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO orderdetails VALUES(NULL,?,?,?)");
             stmt.setString(1,s);
             stmt.setInt(2, Customer_id);
             stmt.setDouble(3, Grand_Total);
@@ -876,10 +882,11 @@ void createConnection(){
     }//GEN-LAST:event_ClearAllbtnActionPerformed
 
     private void customersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customersTableMouseClicked
+       System.out.println("the table has been clicked");
         int rows = customersTable.getSelectedRow();
         int custID = (int) customersTable.getValueAt(rows,0);
     try {
-           String sql = "SELECT COUNT(order_ID) FROM Orders_Details WHERE Customer_id = "+custID+"";
+           String sql = "SELECT COUNT(orderid) FROM Orderdetails WHERE Customerid = "+custID+"";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            while(rs.next()){
@@ -887,7 +894,7 @@ void createConnection(){
                TotalOrder.setText(Integer.toString(TotalOrders));
            }
            
-           sql = "SELECT SUM(grand_Total) FROM Orders_Details WHERE Customer_id = "+custID+"";
+           sql = "SELECT SUM(GrandTotal) FROM Orderdetails WHERE Customerid = "+custID+"";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            while(rs.next()){
@@ -946,7 +953,7 @@ void createConnection(){
             String Role = "Admin";
             String ID = (model.getValueAt(Row, 0).toString());
             PreparedStatement stmt;
-            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE id = ? ");
+            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE Userid = ? ");
             stmt.setString(1, Role);
             stmt.setString(2, ID);
             stmt.execute();
@@ -968,7 +975,7 @@ void createConnection(){
             String Role = "User";
             String ID = (model.getValueAt(Row, 0).toString());
             PreparedStatement stmt;
-            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE id = ? ");
+            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE Userid = ? ");
             stmt.setString(1, Role);
             stmt.setString(2, ID);
             stmt.execute();
@@ -989,7 +996,7 @@ void createConnection(){
             int Row = UsersTable.getSelectedRow();
             String ID = (model.getValueAt(Row, 0).toString());
             PreparedStatement stmt;
-            stmt = con.prepareStatement("DELETE FROM users WHERE id = ?");
+            stmt = con.prepareStatement("DELETE FROM users WHERE Userid = ?");
             stmt.setString(1, ID);
             stmt.execute();
             System.out.println("Completed");
@@ -1025,13 +1032,19 @@ void createConnection(){
             java.util.logging.Logger.getLogger(InventorysystemUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+ Timer timer = new Timer();
+  
+ //timer.schedule(Update_table(), 0, 5000);
+ //timer.schedule( Update_table() {
+  
+//}, 0, 5000);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  InventorysystemUI Inventory=new InventorysystemUI();
            Inventory.setVisible(true);
                
+
             }
         });
     }

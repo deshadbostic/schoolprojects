@@ -744,7 +744,7 @@ void createConnection(){
 
     //ADD CUSTOMER
     private void AddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCusActionPerformed
-        AddCustomer obj = new AddCustomer();
+        addCustomer obj = new addCustomer();
         obj.setVisible(true);
     }//GEN-LAST:event_AddCusActionPerformed
 
