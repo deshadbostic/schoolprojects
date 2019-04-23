@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 17, 2019 at 02:09 AM
+-- Host: 127.0.0.1
+-- Generation Time: Apr 23, 2019 at 05:18 AM
 -- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- PHP Version: 7.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,11 +25,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Customers`
+-- Table structure for table `customers`
 --
 
-CREATE TABLE `Customers` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `customers` (
+  `Customerid` int(7) NOT NULL,
   `FirstName` varchar(30) NOT NULL,
   `Lastname` varchar(30) NOT NULL,
   `Address` varchar(60) NOT NULL,
@@ -38,12 +38,12 @@ CREATE TABLE `Customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Customers`
+-- Dumping data for table `customers`
 --
 
-INSERT INTO `Customers` (`id`, `FirstName`, `Lastname`, `Address`, `Telephone`, `Email`) VALUES
+INSERT INTO `customers` (`Customerid`, `FirstName`, `Lastname`, `Address`, `Telephone`, `Email`) VALUES
 (1, 'Usab', 'uabs', 'ocna', '098-7654', 'ajgsc,as.com'),
-(2, 'Usab', 'hey there', 'asdqw', '098-7654', 'ajgsc,as.com'),
+(2, 'Usabjh', 'hey there', 'asdqw', '098-7654', 'ajgsc,as.com'),
 (3, 'Kyle', 'Batmans', '12', '421', '124');
 
 -- --------------------------------------------------------
@@ -53,128 +53,201 @@ INSERT INTO `Customers` (`id`, `FirstName`, `Lastname`, `Address`, `Telephone`, 
 --
 
 CREATE TABLE `inventory` (
-  `id` int(11) NOT NULL,
-  `Name` varchar(50) NOT NULL,
+  `Itemname` varchar(255) NOT NULL,
   `Price` double NOT NULL,
   `Quantity` int(11) NOT NULL,
-  `Description` varchar(100) NOT NULL
+  `Description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `Name`, `Price`, `Quantity`, `Description`) VALUES
-(1, 'Kyle is a plant', 1000000, 0, 'The One and Only'),
-(2, 'Pumpkin', 13, 4, 'Pumpkin'),
-(3, 'Palm', 23, 0, 'KYle'),
-(4, 'Watermelon', 14, 0, 'kyea');
+INSERT INTO `inventory` (`Itemname`, `Price`, `Quantity`, `Description`) VALUES
+('Green Bull', 39.99, 213, 'This is a One Piece inspired plant that is a rich green color for true onepiece fans'),
+('Kyle is a plant', 1000000, 0, 'The One and Only this different'),
+('Palm', 23, 0, 'KYle'),
+('Plant', 50, 26, 'Example'),
+('Pumpkin', 13, 2, 'Pumpkin'),
+('testplantnumber6', 32, 343, 'i add this to see how the table handle when it bigger than what it could physically handle'),
+('Try', 21, 1, 'Try');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Items_Sold`
+-- Table structure for table `items_sold`
 --
 
-CREATE TABLE `Items_Sold` (
-  `item_Name` varchar(50) NOT NULL,
-  `Quantity_Sold` int(11) NOT NULL,
-  `order_Date` varchar(50) NOT NULL
+CREATE TABLE `items_sold` (
+  `Itemname` varchar(50) NOT NULL,
+  `Quantitysold` int(7) NOT NULL,
+  `Orderdate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Items_Sold`
+-- Dumping data for table `items_sold`
 --
 
-INSERT INTO `Items_Sold` (`item_Name`, `Quantity_Sold`, `order_Date`) VALUES
+INSERT INTO `items_sold` (`Itemname`, `Quantitysold`, `Orderdate`) VALUES
 ('Watermelon', 5, '0000-00-00'),
-('Pumpkin', 3, '2019'),
-('watermelon', 1, '1'),
-('watermelon', 1, '1'),
+('Pumpkin', 3, '0000-00-00'),
+('watermelon', 1, '0000-00-00'),
+('watermelon', 1, '0000-00-00'),
 ('Pumpkin', 1, '2019-04-08'),
-('Pumpkin', 1, '2019-04-01');
+('Pumpkin', 1, '2019-04-01'),
+('Pumpkin', 1, '2019-04-02'),
+('Plant', 12, '2019-04-01'),
+('Pumpkin', 1, '2019-04-01'),
+('Try', 1, '2019-04-19'),
+('Plant', 5, '2019-04-19');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Orders_Details`
+-- Table structure for table `orderdetails`
 --
 
-CREATE TABLE `Orders_Details` (
-  `order_ID` int(11) NOT NULL,
-  `order_Date` varchar(50) NOT NULL,
-  `Customer_id` int(11) NOT NULL,
-  `grand_Total` double NOT NULL
+CREATE TABLE `orderdetails` (
+  `Orderid` int(7) NOT NULL,
+  `Itemname` varchar(255) NOT NULL,
+  `Price` double NOT NULL,
+  `Quantitysold` int(11) NOT NULL,
+  `Orderdate` date NOT NULL,
+  `Total` int(11) NOT NULL,
+  `GrandTotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Orders_Details`
+-- Dumping data for table `orderdetails`
 --
 
-INSERT INTO `Orders_Details` (`order_ID`, `order_Date`, `Customer_id`, `grand_Total`) VALUES
-(5, 'eW', 3, 34.4),
-(6, '4/14/19 9:50 PM', 3, 14),
-(7, '4/14/19 9:50 PM', 3, 60),
-(8, '4/14/19 9:51 PM', 2, 60),
-(9, '4/14/19 9:51 PM', 1, 60),
-(10, '4/1/19 10:08 PM', 3, 14),
-(11, '2019-04-01', 1, 28),
-(12, '2019-04-01', 3, 14),
-(13, '2019-04-01', 3, 52),
-(14, '2019-04-01', 3, 260),
-(15, '2019-04-01', 3, 153),
-(16, '2019-04-30', 3, 14),
-(17, '2019-04-01', 3, 13),
-(18, '2019-04-01', 3, 13),
-(19, '2019-04-01', 3, 13),
-(20, '2019-04-08', 2, 13),
-(21, '2019-04-08', 2, 1000013),
-(22, '2019-04-08', 3, 13),
-(23, '2019-04-01', 3, 13);
+INSERT INTO `orderdetails` (`Orderid`, `Itemname`, `Price`, `Quantitysold`, `Orderdate`, `Total`, `GrandTotal`) VALUES
+(1, 'Palm', 21, 2, '2019-04-10', 42, 200);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ordertbl`
+--
+
+CREATE TABLE `ordertbl` (
+  `Orderid` int(7) NOT NULL,
+  `Customerid` int(7) NOT NULL,
+  `Date` date NOT NULL,
+  `Time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ordertbl`
+--
+
+INSERT INTO `ordertbl` (`Orderid`, `Customerid`, `Date`, `Time`) VALUES
+(1, 1, '2019-04-01', '09:10:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `Userid` int(7) NOT NULL,
+  `Username` varchar(30) CHARACTER SET latin1 NOT NULL,
+  `Password` varchar(40) CHARACTER SET latin1 NOT NULL,
+  `Role` varchar(10) CHARACTER SET latin1 NOT NULL DEFAULT 'User'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`Userid`, `Username`, `Password`, `Role`) VALUES
+(1, 'Kyle', 'Password', 'Admin'),
+(2, 'user', 'test', 'Admin'),
+(3, 'user2', 'test', 'User'),
+(4, 'Deshad', 'Passcode', 'Admin');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `Customers`
+-- Indexes for table `customers`
 --
-ALTER TABLE `Customers`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`Customerid`);
 
 --
 -- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`Itemname`);
 
 --
--- Indexes for table `Orders_Details`
+-- Indexes for table `items_sold`
 --
-ALTER TABLE `Orders_Details`
-  ADD PRIMARY KEY (`order_ID`);
+ALTER TABLE `items_sold`
+  ADD KEY `Itemname` (`Itemname`);
+
+--
+-- Indexes for table `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  ADD PRIMARY KEY (`Orderid`,`Itemname`),
+  ADD KEY `Itemname` (`Itemname`),
+  ADD KEY `Orderid` (`Orderid`);
+
+--
+-- Indexes for table `ordertbl`
+--
+ALTER TABLE `ordertbl`
+  ADD PRIMARY KEY (`Orderid`),
+  ADD KEY `Customerid` (`Customerid`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`Userid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `Customers`
+-- AUTO_INCREMENT for table `customers`
 --
-ALTER TABLE `Customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `customers`
+  MODIFY `Customerid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `inventory`
+-- AUTO_INCREMENT for table `ordertbl`
 --
-ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `ordertbl`
+  MODIFY `Orderid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `Orders_Details`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `Orders_Details`
-  MODIFY `order_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+ALTER TABLE `users`
+  MODIFY `Userid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`Orderid`) REFERENCES `ordertbl` (`Orderid`),
+  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`Itemname`) REFERENCES `inventory` (`Itemname`);
+
+--
+-- Constraints for table `ordertbl`
+--
+ALTER TABLE `ordertbl`
+  ADD CONSTRAINT `ordertbl_ibfk_1` FOREIGN KEY (`Customerid`) REFERENCES `customers` (`Customerid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
