@@ -204,7 +204,7 @@ public class AddAnItem extends javax.swing.JFrame {
             String Description = description.getText();
 
             PreparedStatement stmt;
-            stmt = con.prepareStatement("INSERT INTO inventory VALUES(?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO inventory VALUES(NULL,?,?,?,?)");
 
             stmt.setString(1, Name);
             stmt.setDouble(2, Price);

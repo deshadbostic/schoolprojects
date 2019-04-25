@@ -145,7 +145,7 @@ public class RemoveAnItem extends javax.swing.JFrame {
         int row = inventoryTable.getSelectedRow();
         String name = inventoryTable.getValueAt(row, 0).toString();
 
-        String sqlc = "DELETE FROM inventory WHERE Itemname = ?";
+        String sqlc = "DELETE FROM inventory WHERE name = ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sqlc);
             stmt.setString(1, name);

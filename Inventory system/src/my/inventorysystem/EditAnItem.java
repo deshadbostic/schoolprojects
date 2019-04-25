@@ -20,13 +20,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
-
-
 public class EditAnItem extends javax.swing.JFrame {
  Connection con;
    ResultSet rs;
    PreparedStatement stmt;
-   int previousrowset;
       /**
      * Creates new form EditAnItem
      */
@@ -35,7 +32,6 @@ public class EditAnItem extends javax.swing.JFrame {
          createConnection();
         Update_table();
     }
- 
  void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -65,15 +61,6 @@ public class EditAnItem extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null,e);
        }      
         
-    }
-
-    private void setrowfunction(int rowset){
-        previousrowset=rowset; 
-        System.out.println(previousrowset);
-    }
-      private int getrowfunction(){
-             System.out.println(previousrowset);
-        return previousrowset;
     }
     
     /**
@@ -255,23 +242,13 @@ public class EditAnItem extends javax.swing.JFrame {
         if (YesorNo == 0){
         
         try { 
-           PreparedStatement stmt = con.prepareStatement("UPDATE inventory set Itemname = ?, price = ?, quantity = ?, description = ?  WHERE Itemname = ? ");
-               DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
-        int row = inventoryTable.getSelectedRow();
-       System.out.println(row);
-        if (row==-1){
-           row= getrowfunction();
-          //  get previous row so we can continue
-        }else{
-              setrowfunction(row);
-        }
-        System.out.println(row);
-        String Itemname = (String) model.getValueAt(row,0);
+           PreparedStatement stmt = con.prepareStatement("UPDATE inventory set name = ?, price = ?, quantity = ?, description = ?  WHERE id = ? ");
+           
            stmt.setDouble(2, Double.parseDouble(price.getText()));
            stmt.setString(1, name.getText());
            stmt.setInt(3, Integer.parseInt(quantity.getText()));
            stmt.setString(4, description.getText());
-            stmt.setString(5, Itemname);
+           stmt.setInt(5, Integer.parseInt(id.getText()));
            stmt.executeUpdate();
            stmt.close();
            JOptionPane.showMessageDialog(null, "Updated Successfully");
@@ -285,18 +262,18 @@ public class EditAnItem extends javax.swing.JFrame {
     }//GEN-LAST:event_updatebtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
-      
+        id.setEnabled(false);
         DefaultTableModel model = (DefaultTableModel) inventoryTable.getModel();
         int row = inventoryTable.getSelectedRow();
         
-        
-        String ItemName = (String) model.getValueAt(row,0);
-        String Price = (model.getValueAt(row,1).toString());
-        String Quantity = (model.getValueAt(row, 2).toString());
-        String Description =  (String) model.getValueAt(row,3);
- 
-       
-        name.setText(ItemName);
+        String ID = (model.getValueAt(row, 0).toString());
+        String Name = (String) model.getValueAt(row,1);
+        String Price = (model.getValueAt(row,2).toString());
+        String Quantity = (model.getValueAt(row, 3).toString());
+        String Description =  (String) model.getValueAt(row,1);
+
+        id.setText(ID);
+        name.setText(Name);
         price.setText(Price);
         quantity.setText(Quantity);
         description.setText(Description);
@@ -341,7 +318,7 @@ public class EditAnItem extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(EditAnItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-   
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

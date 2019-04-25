@@ -17,12 +17,15 @@ public class LoginUI extends javax.swing.JFrame {
    Connection con;
    ResultSet rs;
    PreparedStatement stmt;
+ 
    
     public LoginUI() {
         initComponents();
         createConnection();
+        
     }
     
+
       void createConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -50,11 +53,12 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Username = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        Password = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         Loginbtn = new javax.swing.JButton();
         Exitbtn = new javax.swing.JButton();
         Wrong = new javax.swing.JLabel();
+        SugnUpbtn = new javax.swing.JButton();
+        Password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,12 +84,34 @@ public class LoginUI extends javax.swing.JFrame {
 
         Wrong.setForeground(new java.awt.Color(255, 0, 51));
 
+        SugnUpbtn.setText("Sign Up");
+        SugnUpbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SugnUpbtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(Loginbtn)
+                .addGap(70, 70, 70)
+                .addComponent(SugnUpbtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(Exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Wrong, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(178, 178, 178)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -94,21 +120,8 @@ public class LoginUI extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Username, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(Password)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(Loginbtn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(Exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Password))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Wrong, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,11 +138,12 @@ public class LoginUI extends javax.swing.JFrame {
                     .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Wrong, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Loginbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                    .addComponent(Exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SugnUpbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,18 +165,18 @@ public class LoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitbtnActionPerformed
 
     private void LoginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginbtnActionPerformed
-       String username = Username.getText();
-       String password = Password.getText();
-        
+  
+        String username = Username.getText();
+        String password = Password.getText();
         
       try{
-          PreparedStatement stmt;
+         PreparedStatement stmt;
          stmt = con.prepareStatement("SELECT * FROM users WHERE Username = BINARY ? AND Password = BINARY ? ");
          stmt.setString(1,Username.getText());
          stmt.setString(2,Password.getText());
          rs = stmt.executeQuery();
          if (rs.next()){
-             if ((rs.getString("Username").equals(username)) && rs.getString("Password").equals(password) && rs.getString("role").equals("Admin")){
+             if ((rs.getString("Username").equals(username)) && rs.getString("Password").equals(password) && rs.getString("role").equals("Admin") || rs.getString("role").equals("SuperUser")){
                   InventorysystemUI obj = new InventorysystemUI();
                   obj.setVisible(true);
                   dispose();
@@ -175,15 +189,17 @@ public class LoginUI extends javax.swing.JFrame {
                   Wrong.setText("Incorrect Credentials");
                   JOptionPane.showMessageDialog(null,"Incorrect Credentials");  
          }
-        
-         
-         
-         
+                
       }catch(Exception e){
           System.out.println(e);
           
       }       
     }//GEN-LAST:event_LoginbtnActionPerformed
+
+    private void SugnUpbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SugnUpbtnActionPerformed
+        SignUp obj = new SignUp();
+        obj.setVisible(true);
+    }//GEN-LAST:event_SugnUpbtnActionPerformed
 
 
  
@@ -230,7 +246,8 @@ public class LoginUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Exitbtn;
     private javax.swing.JButton Loginbtn;
-    private javax.swing.JTextField Password;
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JButton SugnUpbtn;
     private javax.swing.JTextField Username;
     private javax.swing.JLabel Wrong;
     private javax.swing.JLabel jLabel1;
