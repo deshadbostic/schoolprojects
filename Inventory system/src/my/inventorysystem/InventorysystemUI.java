@@ -53,12 +53,13 @@ void createConnection(){
     
     private void setData(){
          try {
-           String sql = "SELECT MAX(order_ID) FROM Orders_Details";
+           String sql = "SELECT MAX(Orderid) FROM ordertbl";
            stmt = con.prepareStatement(sql);
            rs=stmt.executeQuery();
            while(rs.next()){
                order_id = rs.getInt(1) + 1;
                order_ID.setText(Integer.toString(order_id));
+               System.out.println(order_id);
            }            
            
            
@@ -70,17 +71,17 @@ void createConnection(){
     private void Update_table(){
         
        try {
-           String sql = "SELECT * FROM inventory";
+           String sql = "SELECT Itemname, Price, Quantity, Description FROM inventory";
            stmt = con.prepareStatement(sql);
            rs=stmt.executeQuery();
            inventoryTable.setModel(DbUtils.resultSetToTableModel(rs)); 
              
-           sql = "SELECT * FROM Customers";
+           sql = "SELECT * FROM customers";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            customersTable.setModel(DbUtils.resultSetToTableModel(rs));
            
-            sql = "SELECT * FROM Customers";
+            sql = "SELECT * FROM customers";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            customersTable2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -90,12 +91,12 @@ void createConnection(){
            rs = stmt.executeQuery();
            inventoryTable2.setModel(DbUtils.resultSetToTableModel(rs));
            
-           sql = "SELECT * FROM Items_Sold";
+           sql = "SELECT * FROM orderdetails";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            ItemSoldTable.setModel(DbUtils.resultSetToTableModel(rs));
            
-           sql = "SELECT id,Role, Username FROM users";
+           sql = "SELECT Userid,Role, Username FROM users";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            UsersTable.setModel(DbUtils.resultSetToTableModel(rs));
@@ -104,6 +105,7 @@ void createConnection(){
            
        } catch (Exception e) {
            JOptionPane.showMessageDialog(null,"Unable to refresh one or more tables!");
+           System.out.println(e);
        }      
         
     }
@@ -823,7 +825,7 @@ void createConnection(){
     }//GEN-LAST:event_refreshCusActionPerformed
 
     private void AddItembtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItembtnActionPerformed
-        DefaultTableModel modelinventory = (DefaultTableModel) inventoryTable.getModel();
+        DefaultTableModel modelinventory = (DefaultTableModel) inventoryTable2.getModel();
         int [ ] indexes = inventoryTable2.getSelectedRows();
         Object [ ] row = new Object [5];
         DefaultTableModel modelorder = (DefaultTableModel) orderTable.getModel();
@@ -834,6 +836,7 @@ void createConnection(){
         //Asks how many items user wishes to buy
         int Howmany = Integer.parseInt(howmany);
         int Rows = inventoryTable2.getSelectedRow();
+        
         //To compare if Howmany is more than inventory available
         int IsQuantityOver = (int) inventoryTable2.getValueAt(Rows,3);
         
@@ -841,13 +844,15 @@ void createConnection(){
         double price = Double.parseDouble(modelinventory.getValueAt(Rows,2).toString());
         double total = price * Howmany;
         
-        for (int i = 0; i < indexes.length; i++){        
+        
+        for (int i = 0; i < indexes.length; i++){   
             row [0] = modelinventory.getValueAt(indexes [i], 0);
             row [1] = modelinventory.getValueAt(indexes [i], 1);
             row [2] = modelinventory.getValueAt(indexes [i], 2);
             row [3] = howmany;
             row [4] = total;
             modelorder.addRow(row);     
+           
         }
         
         //To calculate the grandtotal
@@ -855,7 +860,7 @@ void createConnection(){
         int  Rowscount = orderTable.getRowCount();
         double amt;
         for (int z = 0; z < Rowscount; z++){
-            amt = Double.parseDouble(orderTable.getValueAt(z, 4).toString());
+            amt = Double.parseDouble(orderTable.getValueAt(z, 2).toString());
             grandtotal += amt;
            }
         GrandTotal.setText(Double.toString(grandtotal));      
@@ -907,25 +912,26 @@ void createConnection(){
            Date orderDate = choosedate.getDate();
            String s = sdf.format(orderDate);
         try {
-            //insert into order_details Table
-           
+            //insert into orderdetails Table
+           System.out.println("Here");
            java.sql.Date sqlDate=new java.sql.Date(date.getTime());          
             int Customer_id = (int) customersTable2.getValueAt(CusRow,0);
             double Grand_Total = Double.parseDouble(GrandTotal.getText());
+            String Time="19:21:08";
             
            if(s.equals("")){
            JOptionPane.showMessageDialog(null,"Enter a date");}
             
             PreparedStatement stmt;
-            stmt = con.prepareStatement("INSERT INTO Orders_Details VALUES(NULL,?,?,?)");
-            stmt.setString(1,s);
-            stmt.setInt(2, Customer_id);
-            stmt.setDouble(3, Grand_Total);
+            stmt = con.prepareStatement("INSERT INTO ordertbl VALUES(NULL,?,?,?,?)");
+            stmt.setInt(1, Customer_id);
+            stmt.setString(2,s);
+            stmt.setString(3,Time);
+            stmt.setDouble(4, Grand_Total);
             stmt.execute();
             stmt.close();
             JOptionPane.showMessageDialog(null,"Successfully Ordered!","Notice",JOptionPane.INFORMATION_MESSAGE);
-            order_id++;
-            order_ID.setText(Integer.toString(order_id));
+            
             
             
 
@@ -934,31 +940,38 @@ void createConnection(){
             System.out.println(e);
         }
         
-        //Remove item count from stock
+        //Remove item count from stock and add details to orderdetails
         try{
             DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
             int z = 0;
-            
+            System.out.println("Here 3");
             do{
+                double Grand_Total = Double.parseDouble(GrandTotal.getText());
                 String Name = (String) (orderTable.getValueAt(z,1));
                 System.out.println(Name);
-                int id = (int) (orderTable.getValueAt(z, 0));
-                String Quant = (String) (orderTable.getValueAt(z, 3));
+                String Quant = (String) orderTable.getValueAt(z, 3);
                 int Quantity = Integer.parseInt(Quant);
                 System.out.println(Quantity);
-                z++;
+                int ID = (int)orderTable.getValueAt(z,0);
+                double Price = (double)orderTable.getValueAt(z,2);
+                int Orderid = Integer.parseInt(order_ID.getText());
+                System.out.println(Orderid);
                 PreparedStatement stmt;
-                stmt = con.prepareStatement("UPDATE `inventory` SET `Quantity`= Quantity - "+Quantity+" WHERE id in ("+id+")");
+                stmt = con.prepareStatement("UPDATE `inventory` SET `Quantity`= Quantity - "+Quantity+" WHERE id  = "+ID+"");
                 stmt.executeUpdate();
-                stmt = con.prepareStatement("INSERT INTO Items_Sold (item_Name,Quantity_Sold,order_Date) VALUES (?,?,?)");
-                stmt.setString(1,Name);
-                stmt.setInt(2,Quantity);
-                stmt.setString(3,s);
+                stmt = con.prepareStatement("INSERT INTO orderdetails (Orderid,Itemname,Price,Quantitysold,Total) VALUES (?,?,?,?,?)");
+                stmt.setInt(1,Orderid);
+                stmt.setString(2,Name);
+                stmt.setDouble(3,Price);
+                stmt.setInt(4,Quantity);
+                stmt.setDouble(5,Grand_Total);
                 stmt.execute();
                 stmt.close();
+                z++;
             }while(z < 9);
+             
+          
            
-            
             
         }
         catch(Exception e){
@@ -967,7 +980,8 @@ void createConnection(){
         
         
         
-        
+         order_id++;
+         order_ID.setText(Integer.toString(order_id));
         
     }//GEN-LAST:event_OrderbtnActionPerformed
 
@@ -980,7 +994,7 @@ void createConnection(){
         int rows = customersTable.getSelectedRow();
         int custID = (int) customersTable.getValueAt(rows,0);
     try {
-           String sql = "SELECT COUNT(order_ID) FROM Orders_Details WHERE Customer_id = "+custID+"";
+           String sql = "SELECT COUNT(Orderid) FROM ordertbl WHERE Customerid = "+custID+"";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            while(rs.next()){
@@ -988,7 +1002,7 @@ void createConnection(){
                TotalOrder.setText(Integer.toString(TotalOrders));
            }
            
-           sql = "SELECT SUM(grand_Total) FROM Orders_Details WHERE Customer_id = "+custID+"";
+           sql = "SELECT SUM(Grandtotal) FROM ordertbl WHERE Customerid = "+custID+"";
            stmt = con.prepareStatement(sql);
            rs = stmt.executeQuery();
            while(rs.next()){
@@ -1053,7 +1067,7 @@ void createConnection(){
                 JOptionPane.showMessageDialog(null,"Selected is already an Admin");
             }else if (user.equals("User")){ 
             PreparedStatement stmt;
-            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE id = ? ");
+            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE Userid = ? ");
             stmt.setString(1, Role);
             stmt.setString(2, ID);
             stmt.execute();
@@ -1086,7 +1100,7 @@ void createConnection(){
             }else if (user.equals("Admin")){ 
             
             PreparedStatement stmt;
-            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE id = ? ");
+            stmt = con.prepareStatement("UPDATE users SET Role= ? WHERE Userid = ? ");
             stmt.setString(1, Role);
             stmt.setString(2, ID);
             stmt.execute();
@@ -1110,7 +1124,7 @@ void createConnection(){
             int Row = UsersTable.getSelectedRow();
             String ID = (model.getValueAt(Row, 0).toString());
             PreparedStatement stmt;
-            stmt = con.prepareStatement("DELETE FROM users WHERE id = ?");
+            stmt = con.prepareStatement("DELETE FROM users WHERE Userid = ?");
             stmt.setString(1, ID);
             stmt.execute();
             System.out.println("Completed");
@@ -1136,7 +1150,7 @@ void createConnection(){
              if ((rs.getString("Username").equals(username)) && rs.getString("Password").equals(password) && rs.getString("role").equals("Admin")){
                  AddUser.setEnabled(true);
                  RemoveUser.setEnabled(true);
-                   String sql = "SELECT id, Role, Usernmame FROM users";
+                   String sql = "SELECT Userid, Role, Usernmame FROM users";
                    stmt = con.prepareStatement(sql);
                    rs = stmt.executeQuery();
                    UsersTable.setModel(DbUtils.resultSetToTableModel(rs));
@@ -1146,7 +1160,7 @@ void createConnection(){
                    RemoveUser.setEnabled(true);
                    PromoteUser.setEnabled(true);
                    DemoteUser.setEnabled(true);
-                   String sql = "SELECT id,Role,Username FROM users";
+                   String sql = "SELECT Userid,Role,Username FROM users";
                    stmt = con.prepareStatement(sql);
                    rs = stmt.executeQuery();
                    UsersTable.setModel(DbUtils.resultSetToTableModel(rs));

@@ -204,7 +204,7 @@ public class AddAnItem extends javax.swing.JFrame {
             String Description = description.getText();
 
             PreparedStatement stmt;
-            stmt = con.prepareStatement("INSERT INTO inventory VALUES(NULL,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO inventory VALUES(?,?,?,?)");
 
             stmt.setString(1, Name);
             stmt.setDouble(2, Price);
@@ -217,7 +217,7 @@ public class AddAnItem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Item Added Successfully");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"You have entered an invalid value","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error,invalid value or item already exists","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_additembtnActionPerformed
 

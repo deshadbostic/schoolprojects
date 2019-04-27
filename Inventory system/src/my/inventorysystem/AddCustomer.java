@@ -221,7 +221,7 @@ public class AddCustomer extends javax.swing.JFrame {
             String Email = email.getText();
 
             PreparedStatement stmt;
-            stmt = con.prepareStatement("INSERT INTO Customers (`FirstName`,`LastName`,`Address`,`Telephone`,`Email`) VALUES(?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO customers (`FirstName`,`LastName`,`Address`,`Telephone`,`Email`) VALUES(?,?,?,?,?)");
 
             stmt.setString(1, FirstName);
             stmt.setString(2, LastName);
