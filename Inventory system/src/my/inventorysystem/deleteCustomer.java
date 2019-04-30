@@ -49,7 +49,7 @@ public class deleteCustomer extends javax.swing.JFrame {
       private void Update_table(){
         
        try {
-           String sql = "SELECT * FROM Customers";
+           String sql = "SELECT * FROM customers";
            stmt = con.prepareStatement(sql);
            rs=stmt.executeQuery();
            inventoryTable.setModel(DbUtils.resultSetToTableModel(rs));
@@ -158,23 +158,28 @@ public class deleteCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_backbtnActionPerformed
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
-        int row = inventoryTable.getSelectedRow();
-        String name = inventoryTable.getValueAt(row, 1).toString();
-        System.out.print(name);
-
-        String sqlc = "DELETE FROM Customers WHERE FirstName = ?";
+        
+        int YesorNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to Delete?", "Delete", JOptionPane.YES_NO_OPTION);
+        if (YesorNo == 0){
         try {
+            String sqlc = "DELETE FROM customers WHERE Customerid = ?";
+            int row = inventoryTable.getSelectedRow();
+            int id = (Integer)inventoryTable.getValueAt(row, 0);
             PreparedStatement stmt = con.prepareStatement(sqlc);
-            stmt.setString(1, name);
+            stmt.setInt(1, id);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Delete completed");
             stmt.close();
         }
+            
+        
 
-        catch (SQLException ex) {
-            Logger.getLogger(RemoveAnItem.class.getName()).log(Level.SEVERE, null, ex);
+        catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Cannot delete a customer who has orders", "Error",JOptionPane.WARNING_MESSAGE);
         }
         refreshbtn.doClick();
+        }
     }//GEN-LAST:event_deletebtnActionPerformed
 
     public static void main(String args[]) {

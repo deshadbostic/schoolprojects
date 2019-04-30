@@ -165,7 +165,6 @@ public class LoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitbtnActionPerformed
 
     private void LoginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginbtnActionPerformed
-  
         String username = Username.getText();
         String password = Password.getText();
         
@@ -176,10 +175,14 @@ public class LoginUI extends javax.swing.JFrame {
          stmt.setString(2,Password.getText());
          rs = stmt.executeQuery();
          if (rs.next()){
+             
+             
              if ((rs.getString("Username").equals(username)) && rs.getString("Password").equals(password) && rs.getString("role").equals("Admin") || rs.getString("role").equals("SuperUser")){
                   InventorysystemUI obj = new InventorysystemUI();
                   obj.setVisible(true);
                   dispose();
+                  
+                  
              }else if ((rs.getString("Username").equals(username)) && rs.getString("Password").equals(password) && rs.getString("role").equals("User")){
                   InventorysystemUINormalUser obj2 = new InventorysystemUINormalUser();
                   obj2.setVisible(true);

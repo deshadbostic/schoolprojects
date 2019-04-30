@@ -150,9 +150,9 @@ public class SignUp extends javax.swing.JFrame {
         String master = MasterPass.getText();
         
           try {
-              
-              if ((master.equals(Masterpassword)) && (password.equals(passwordre))){
-                  JOptionPane.showMessageDialog(null,"User Added Successfully");
+              if (Username.getText().equals("") || Password.getText().equals("") || PasswordRe.getText().equals("") || MasterPass.getText().equals("")){
+                  JOptionPane.showMessageDialog(null,"One or more fields blank","Blank fileds!", JOptionPane.INFORMATION_MESSAGE);
+              }else if ((master.equals(Masterpassword)) && (password.equals(passwordre))){
                    PreparedStatement stmt;
                    stmt = con.prepareStatement("INSERT INTO users (`Username`,`Password`) VALUES(?,?)");
             
@@ -160,13 +160,19 @@ public class SignUp extends javax.swing.JFrame {
                   stmt.setString(2, password);
                   stmt.execute();
                   stmt.close();
-              
-              }else if ((!master.equals(Masterpassword)) || (!password.equals(passwordre))){
-                  JOptionPane.showMessageDialog(null,"Either your MASTER PASSWORD is incorrect or your PASSWORDS do not match!");
+                  JOptionPane.showMessageDialog(null,"User Added Successfully");
+                                
+              }else if ((!master.equals(Masterpassword)) && (!password.equals(passwordre))){
+                  JOptionPane.showMessageDialog(null,"MASTER PASSWORD is incorrect or PASSWORDS do not match!");
+              }else if (!master.equals(Masterpassword)){
+                    JOptionPane.showMessageDialog(null,"MASTER PASSWORD is incorrect!");
+              }else if (!password.equals(passwordre)){
+                    JOptionPane.showMessageDialog(null,"Passwords do no match");
               }
                
           } catch (Exception e) {
              System.out.println(e);
+             JOptionPane.showMessageDialog(null,"The user " +username+ " already exists","User Exists",JOptionPane.INFORMATION_MESSAGE);
           }
     }//GEN-LAST:event_SignUpbtnActionPerformed
 

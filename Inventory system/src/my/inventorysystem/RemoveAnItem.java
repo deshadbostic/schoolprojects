@@ -142,13 +142,16 @@ public class RemoveAnItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
-        int row = inventoryTable.getSelectedRow();
-        String name = inventoryTable.getValueAt(row, 0).toString();
+         int YesorNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to Delete?", "Delete", JOptionPane.YES_NO_OPTION);
 
-        String sqlc = "DELETE FROM inventory WHERE name = ?";
+        if (YesorNo == 0){
         try {
+            int row = inventoryTable.getSelectedRow();
+            String name = inventoryTable.getValueAt(row, 1).toString();
+            String sqlc = "DELETE FROM inventory WHERE Itemname = ?";
             PreparedStatement stmt = con.prepareStatement(sqlc);
             stmt.setString(1, name);
+            System.out.println(name);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Delete completed");
             stmt.close();
@@ -158,6 +161,7 @@ public class RemoveAnItem extends javax.swing.JFrame {
             Logger.getLogger(RemoveAnItem.class.getName()).log(Level.SEVERE, null, ex);
         }
         refreshbtn.doClick();
+        }
     }//GEN-LAST:event_deletebtnActionPerformed
 
     private void refreshbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshbtnActionPerformed

@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package my.inventorysystem;
 
-/**
- *
- * @author De Shad Bostic
- */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -126,7 +119,7 @@ public class EditAnItem extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Name");
+        jLabel1.setText("Name:");
 
         backbtn.setText("Go Back");
         backbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -135,15 +128,15 @@ public class EditAnItem extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Price");
+        jLabel2.setText("Price:");
 
         description.setColumns(20);
         description.setRows(5);
         jScrollPane2.setViewportView(description);
 
-        jLabel3.setText("Quanitity");
+        jLabel3.setText("Quanitity:");
 
-        jLabel4.setText("Description");
+        jLabel4.setText("Description:");
 
         jLabel5.setText("ID:");
 
@@ -160,36 +153,31 @@ public class EditAnItem extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(id, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(name, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(price, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(quantity, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(id, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(name, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(price, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(quantity, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(refreshbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                            .addComponent(editbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(updatebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(refreshbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                    .addComponent(editbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(updatebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(212, 212, 212)
-                .addComponent(backbtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,29 +208,34 @@ public class EditAnItem extends javax.swing.JFrame {
                                     .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editbtn)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refreshbtn)
-                    .addComponent(backbtn))
-                .addGap(33, 33, 33)
-                .addComponent(updatebtn)
-                .addContainerGap(22, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(editbtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(refreshbtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(updatebtn))
+                    .addComponent(backbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
-         int YesorNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "Update", JOptionPane.YES_NO_OPTION);
-        
+        if (quantity.getText().equals("") || price.getText().equals("") || name.getText().equals("") || description.getText().equals("")){
+            
+            JOptionPane.showMessageDialog(null,"One or more fields have been left blank.","Blank Fileds!",JOptionPane.INFORMATION_MESSAGE);
+            
+        }else{
+        int YesorNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "Update", JOptionPane.YES_NO_OPTION);
         if (YesorNo == 0){
         
         try { 
-           PreparedStatement stmt = con.prepareStatement("UPDATE inventory set name = ?, price = ?, quantity = ?, description = ?  WHERE id = ? ");
+           PreparedStatement stmt = con.prepareStatement("UPDATE inventory set Itemname = ?, Price = ?, Quantity = ?, Description = ?  WHERE id = ? ");
            
            stmt.setDouble(2, Double.parseDouble(price.getText()));
            stmt.setString(1, name.getText());
@@ -255,10 +248,10 @@ public class EditAnItem extends javax.swing.JFrame {
            refreshbtn.doClick();
            
            
-       } catch (SQLException ex) {
-           Logger.getLogger(EditAnItem.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (Exception e) {
+          System.out.println(e);
        }
-        }
+        }}
     }//GEN-LAST:event_updatebtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
@@ -270,7 +263,7 @@ public class EditAnItem extends javax.swing.JFrame {
         String Name = (String) model.getValueAt(row,1);
         String Price = (model.getValueAt(row,2).toString());
         String Quantity = (model.getValueAt(row, 3).toString());
-        String Description =  (String) model.getValueAt(row,1);
+        String Description =  (String) model.getValueAt(row,4);
 
         id.setText(ID);
         name.setText(Name);
