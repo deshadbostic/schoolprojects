@@ -70,7 +70,12 @@ public class editCustomer extends javax.swing.JFrame {
         telephone = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        CustomersTable = new javax.swing.JTable();
+        CustomersTable = new javax.swing.JTable()
+        {
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        }  ;
         jButton1 = new javax.swing.JButton();
         refreshbtn = new javax.swing.JButton();
         updatebtn = new javax.swing.JButton();

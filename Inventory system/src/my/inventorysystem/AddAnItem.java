@@ -212,6 +212,8 @@ public class AddAnItem extends javax.swing.JFrame {
             if ((Name.isEmpty()) || (Description.isEmpty())) {
                  JOptionPane.showMessageDialog(null,"One or more fileds are blank.","Empty Fields!",JOptionPane.INFORMATION_MESSAGE);
             }
+            
+            
         try {
             PreparedStatement stmt;
             stmt = con.prepareStatement("INSERT INTO inventory VALUES(NULL,?,?,?,?)");
@@ -234,6 +236,11 @@ public class AddAnItem extends javax.swing.JFrame {
     }//GEN-LAST:event_priceActionPerformed
 
     private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
+     // Class c = Class.forName("InventorysystemUI");  
+   // Object o= c.newInstance();  
+  //Method m =c.getDeclaredMethod("Update_table", null);  
+   // m.setAccessible(true);  
+   // m.invoke(o, null);   
         dispose();
     }//GEN-LAST:event_backbtnActionPerformed
 
@@ -276,6 +283,8 @@ public class AddAnItem extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AddAnItem().setVisible(true);
+                
+              
             }
         });
     }

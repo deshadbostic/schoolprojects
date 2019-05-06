@@ -30,12 +30,19 @@ Connection con;
         Update_table();
         setData();
         jLabel11.setVisible(false);
+        jLabel14.setVisible(false);
         Total.setVisible(false);
         PromoteUser.setEnabled(false);
         DemoteUser.setEnabled(false);
         AddUser.setEnabled(false);
         RemoveUser.setEnabled(false);
-        
+         inventoryTable.getTableHeader().setReorderingAllowed(false);
+         customersTable2.getTableHeader().setReorderingAllowed(false);
+         customersTable.getTableHeader().setReorderingAllowed(false);
+          inventoryTable2.getTableHeader().setReorderingAllowed(false);
+          orderTable.getTableHeader().setReorderingAllowed(false);
+          ItemSoldTable.getTableHeader().setReorderingAllowed(false);
+          UsersTable.getTableHeader().setReorderingAllowed(false);
     }
 void createConnection(){
         try{
@@ -76,7 +83,7 @@ void createConnection(){
        }
     }
 
-    private void Update_table(){
+    public void Update_table(){
         
        try {
            String sql = "SELECT Itemname, Price, Quantity, Description FROM inventory";
@@ -135,6 +142,7 @@ void createConnection(){
         RefreshTable = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable(){
+
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
             }
@@ -156,6 +164,7 @@ void createConnection(){
         AllSales = new javax.swing.JTextField();
         ExitCus1 = new javax.swing.JButton();
         Notes2 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         UsersTable = new javax.swing.JTable(){
@@ -278,7 +287,6 @@ void createConnection(){
         ));
         jScrollPane8.setViewportView(inventoryTable);
 
-        jButton1.setIcon(new javax.swing.ImageIcon("/home/kylie/Pictures/icon/icons8-search-20.png")); // NOI18N
         jButton1.setText("Search");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,7 +311,7 @@ void createConnection(){
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(newItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(editItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(removeItem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, Short.MAX_VALUE))
+                        .addComponent(removeItem, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                     .addComponent(ExitInv, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(69, 69, 69)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -313,7 +321,7 @@ void createConnection(){
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Notes1)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +343,7 @@ void createConnection(){
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                         .addComponent(ExitInv)
                         .addGap(20, 20, 20))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -383,6 +391,8 @@ void createConnection(){
             }
         });
 
+        jLabel14.setText("jLabel14");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -398,7 +408,10 @@ void createConnection(){
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Total, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AllSales, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(AllSales, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel14)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))
@@ -421,14 +434,16 @@ void createConnection(){
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Total, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(AllSales, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(ExitCus1)
@@ -448,6 +463,11 @@ void createConnection(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        UsersTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                UsersTableKeyTyped(evt);
+            }
+        });
         jScrollPane7.setViewportView(UsersTable);
 
         AddUser.setText("Add User");
@@ -510,19 +530,15 @@ void createConnection(){
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(RemoveUser)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(PromoteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(AddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(DemoteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(RemoveUser)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(PromoteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(AddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DemoteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -557,7 +573,7 @@ void createConnection(){
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -571,13 +587,13 @@ void createConnection(){
                 .addComponent(AddUser)
                 .addGap(66, 66, 66)
                 .addComponent(PromoteUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(DemoteUser)
                 .addGap(59, 59, 59)
                 .addComponent(RemoveUser)
-                .addGap(47, 47, 47)
+                .addGap(29, 29, 29)
                 .addComponent(jButton2)
-                .addGap(22, 22, 22))
+                .addGap(40, 40, 40))
         );
 
         jTabbedPane2.addTab("ManageUsers if admim", jPanel6);
@@ -642,7 +658,6 @@ void createConnection(){
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon("/home/kylie/Pictures/icon/icons8-search-20.png")); // NOI18N
         jButton4.setText("Search");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -688,7 +703,7 @@ void createConnection(){
                                 .addGap(418, 418, 418)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 33, Short.MAX_VALUE)))
+                        .addGap(0, 56, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -858,7 +873,7 @@ void createConnection(){
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -877,7 +892,7 @@ void createConnection(){
                             .addComponent(jLabel8)))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -904,7 +919,7 @@ void createConnection(){
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(Orderbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                                 .addComponent(Notes5)))
-                        .addGap(0, 13, Short.MAX_VALUE))
+                        .addGap(0, 57, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -928,7 +943,10 @@ void createConnection(){
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 968, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 968, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -946,6 +964,7 @@ void createConnection(){
     private void newItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemActionPerformed
         AddAnItem obj = new AddAnItem();
         obj.setVisible(true);
+        System.out.println("hey");
     }//GEN-LAST:event_newItemActionPerformed
 
     
@@ -978,6 +997,7 @@ void createConnection(){
     private void AddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCusActionPerformed
         AddCustomer obj = new AddCustomer();
         obj.setVisible(true);
+        
     }//GEN-LAST:event_AddCusActionPerformed
 
     private void ExitCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitCusActionPerformed
@@ -1100,6 +1120,7 @@ void createConnection(){
             stmt.setString(3,formattedDate);
             stmt.setDouble(4, Grand_Total);
             stmt.execute();
+     
             stmt.close();
             JOptionPane.showMessageDialog(null,"Successfully Ordered!","Notice",JOptionPane.INFORMATION_MESSAGE);
             
@@ -1113,23 +1134,51 @@ void createConnection(){
         
         //Remove item count from stock and add details to orderdetails
         try{
+                   int valuesused[];
+                   valuesused=new int [9];
             DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
             int z = 0;
             System.out.println("Here 3");
             do{
+                
+                
                 double Grand_Total = Double.parseDouble(GrandTotal.getText());
                 String Name = (String) (orderTable.getValueAt(z,1));
                 System.out.println(Name);
+                
                 String Quant = (String) orderTable.getValueAt(z, 3);
                 int Quantity = Integer.parseInt(Quant);
                 System.out.println(Quantity);
                 int ID = (int)orderTable.getValueAt(z,0);
-                double Price = (double)orderTable.getValueAt(z,2);
+                 double Price = (double)orderTable.getValueAt(z,2);
                 int Orderid = Integer.parseInt(order_ID.getText());
                 System.out.println(Orderid);
                 PreparedStatement stmt;
-                stmt = con.prepareStatement("UPDATE `inventory` SET `Quantity`= Quantity - "+Quantity+" WHERE id  = "+ID+"");
+                 stmt = con.prepareStatement("UPDATE `inventory` SET `Quantity`= Quantity - "+Quantity+" WHERE id  = "+ID+"");
                 stmt.executeUpdate();
+                valuesused[z]=ID;
+                boolean check=false;
+                for(int i = 0; i <= z; i++){
+                    System.out.println(z);
+                    
+                if(valuesused[z+1]==ID){
+                     stmt = con.prepareStatement("UPDATE `orderdetails` SET `Quantitysold`= Quantitysold + "+Quantity+" WHERE orderid  = "+order_id+"");
+                     stmt.executeUpdate();
+                     valuesused[z]=z;
+                     System.out.println("the check is tru");
+                     check=true;
+                     break;
+                }
+                    System.out.println("the check is false");
+                    System.out.println(valuesused[z]);
+                }
+               if(check==true){
+                   System.out.println("this check was reached");
+                   z++;
+                     continue;
+               }
+              
+                System.out.println("the insert occured");
                 stmt = con.prepareStatement("INSERT INTO orderdetails (Orderid,Itemname,Price,Quantitysold,Total) VALUES (?,?,?,?,?)");
                 stmt.setInt(1,Orderid);
                 stmt.setString(2,Name);
@@ -1378,14 +1427,14 @@ void createConnection(){
 
     private void CalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalculateActionPerformed
         jLabel11.setVisible(true);
-        Total.setVisible(true);
+        jLabel14.setVisible(true);
         int [ ] indexes = ItemSoldTable.getSelectedRows();
         double total = 0.0;
         for (int i = 0; i < indexes.length; i++){   
             double ttotal = (double) ItemSoldTable.getValueAt(indexes[i],2);    
             total += ttotal;
         }
-        Total.setText(Double.toString(total));
+        jLabel14.setText(Double.toString(total));
     }//GEN-LAST:event_CalculateActionPerformed
 
     private void ExitCus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitCus1ActionPerformed
@@ -1446,6 +1495,10 @@ void createConnection(){
         MyNotepad obj = new MyNotepad();
         obj.setVisible(true);
     }//GEN-LAST:event_Notes5ActionPerformed
+
+    private void UsersTableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UsersTableKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsersTableKeyTyped
     
    
     public static void main(String args[]) {
@@ -1477,7 +1530,7 @@ void createConnection(){
             public void run() {
                  InventorysystemUI Inventory=new InventorysystemUI();
            Inventory.setVisible(true);
-               
+              
             }
         });
     }
@@ -1530,6 +1583,7 @@ void createConnection(){
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
